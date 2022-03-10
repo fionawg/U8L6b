@@ -1,3 +1,4 @@
+import java.util.*;
 public class Encryptor
 {
     /** A two-dimensional array of single-character strings, instantiated in the constructor */
@@ -116,10 +117,24 @@ public class Encryptor
      */
     public String decryptMessage(String encryptedMessage)
     {
-
+        String decrypted = "";
+        int count = 0;
+        for (int x = 0; x < encryptedMessage.length()/(numCols * numRows); x++){
+            for (int i = 0; i < letterBlock[0].length; i++){
+                for (int j = 0; j < letterBlock.length; j++){
+                    letterBlock[j][i] = encryptedMessage.substring(count, count + 1);
+                    count++;
+                }
+            }
+            decrypted += decryptBlock();
+        }
+        while (decrypted.substring(decrypted.length() - 1).equals("A")){
+            decrypted = decrypted.substring(0, decrypted.length() -1);
+        }
+        return decrypted;
     }
 
-    public String decryptBlock()
+    private String decryptBlock()
     {
         String str = "";
         for (int i = 0; i < numRows; i++)
